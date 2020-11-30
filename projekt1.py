@@ -40,26 +40,33 @@ def findPatternSunday(searchString, pattern, lastp):
 
 
 def matchesAt(searchString, pattern, position):
+    compareCount = 0
     for i in range(0, len(pattern)):
+        compareCount += 1
         if(pattern[i] != searchString[position+i]):
-           return False
+           return [False, compareCount]
     else:    
-        return True
+        return [True, compareCount]
 
 def naiveV2(searchString, pattern):
-    for i in range(0, len(searchString) - len(pattern)):
-        if(matchesAt(searchString, pattern, i)):
+    compareCount = 0
+    #+1 because of python in range
+    for i in range(0, len(searchString) - len(pattern) + 1):
+        print(compareCount, i)
+        res = matchesAt(searchString, pattern, i)
+        compareCount += res[1]
+        if(res[0]):
             print("matches at: " + str(i))
-
+    return compareCount
 
 if __name__ == "__main__":
-    print(findPatternNaive("ACBCDABA", "ABA"))
-    dic = {i : -1 for i in "ABCD"}
+   # print(findPatternNaive("ACBCDABABBDB", "ABA"))
+   #dic = {i : -1 for i in "ABCD"}
     #print(dic)
-    for i in "ABA":
-        for key, value in dic.items():
-            if (key == i):
-                dic[i] = "ABA".rindex(i)
+    #for i in "ABA":
+    #    for key, value in dic.items():
+    #        if (key == i):
+    #            dic[i] = "ABA".rindex(i)
     #print(dic)
    # print(findPatternSunday("ACBCDABABBDB", "ABA", dic))
     print(naiveV2("ACBCDABABBDB", "ABA"))
