@@ -52,22 +52,37 @@ def naiveV2(searchString, pattern):
     compareCount = 0
     #+1 because of python in range
     for i in range(0, len(searchString) - len(pattern) + 1):
-        print(compareCount, i)
+        #print(compareCount, i)
         res = matchesAt(searchString, pattern, i)
         compareCount += res[1]
         if(res[0]):
             print("matches at: " + str(i))
     return compareCount
 
+def sundayV2(searchString, pattern, lastp):
+    compareCount = 0
+    #start index
+    i = 0
+    while ( i <= len(searchString) - len(pattern)):
+        res = matchesAt(searchString, pattern, i)
+        compareCount += res[1]
+        if(res[0]):
+            print("matches at: " + str(i))    
+        i = i + len(pattern)
+        if(i < len(searchString)):
+            i = i - lastp[searchString[i]]
+    return compareCount        
+            
 if __name__ == "__main__":
    # print(findPatternNaive("ACBCDABABBDB", "ABA"))
-   #dic = {i : -1 for i in "ABCD"}
+    dic = {i : -1 for i in "ABCD"}
     #print(dic)
-    #for i in "ABA":
-    #    for key, value in dic.items():
-    #        if (key == i):
-    #            dic[i] = "ABA".rindex(i)
-    #print(dic)
-   # print(findPatternSunday("ACBCDABABBDB", "ABA", dic))
-    print(naiveV2("ACBCDABABBDB", "ABA"))
+    for i in "ABA":
+        for key, value in dic.items():
+            if (key == i):
+                dic[i] = "ABA".rindex(i)
+    print(dic)
+    #print(findPatternSunday("ACBCDABABBDB", "ABA", dic))
+    #print(naiveV2("ACBCDABABBDB", "ABA"))
     #print(matchesAt("ACBCDABABBDB", "ABA", 7))
+    print(sundayV2("ACBCDABABBDB","ABA",dic))
